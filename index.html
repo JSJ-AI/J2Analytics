@@ -1,567 +1,424 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeff Junker · AI Solutions & Computer Vision</title>
-<meta name="description" content="Jeff Junker — AI consulting, computer vision, digital twin, and operational workflow solutions. Founder of J2Analytics. Berlin, MA.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --bg:#0b0d0f;--surface:#111416;--card:#161a1e;--border:#1e2428;
-  --ink:#e8eaec;--muted:#5a6470;--dim:#1e2428;
-  --gold:#c8a96e;--teal:#3dd6c8;--blue:#4a8fff;
-  --text-body:#8a9aa8;
-}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+<title>J2Analytics — AI Workflow Consulting</title>
+<meta name="description" content="J2Analytics helps organizations discover where AI can reduce data review time and automate workflows. Information flow discovery, agentic AI, and modular agent solutions. Based in Berlin, MA.">
+<meta name="keywords" content="AI consulting, workflow automation, information flow discovery, agentic AI, digital twin, computer vision, AI workflow, Massachusetts AI consultant">
+<meta name="author" content="Jeff Junker, J2Analytics">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://j2analytics.ai">
 
-/* CURSOR */
-.cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;mix-blend-mode:difference;}
-.cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(200,169,110,0.35);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s;}
-.cursor.hover{width:20px;height:20px;}
-.cursor-ring.hover{width:58px;height:58px;border-color:rgba(200,169,110,0.6);}
+<!-- Open Graph (for LinkedIn, social sharing) -->
+<meta property="og:title" content="J2Analytics — AI Workflow Consulting">
+<meta property="og:description" content="Explore where AI could enhance your workflows. J2Analytics helps organizations move from data review to actionable intelligence.">
+<meta property="og:url" content="https://j2analytics.ai">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="J2Analytics">
+
+<!-- Twitter/X card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="J2Analytics — AI Workflow Consulting">
+<meta name="twitter:description" content="Explore where AI could enhance your workflows. Information flow discovery and modular agent solutions.">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1e2d40;
+  --surface:#253548;
+  --surface2:#2d3f55;
+  --accent:#3d8eff;
+  --accent2:#00d4ff;
+  --teal:#00edc8;
+  --white:#f0f6ff;
+  --body:#c4d8ee;
+  --muted:#8caabf;
+  --border:rgba(61,142,255,0.22);
+  --fh:'Plus Jakarta Sans',sans-serif;
+  --fb:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--fb);overflow-x:hidden;line-height:1.6;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 52px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(var(--bg),rgba(11,13,15,0));}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:17px;color:var(--ink);}
-.nav-logo span{color:var(--gold);}
-.nav-links{display:flex;gap:36px;list-style:none;}
-.nav-links a{font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
-.nav-links a:hover{color:var(--gold);}
-.nav-cta{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:9px 22px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;transition:all .2s;}
-.nav-cta:hover{background:var(--gold);color:#000;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(30,45,64,0.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+.logo{font-family:var(--fh);font-size:20px;font-weight:800;letter-spacing:-.01em;background:linear-gradient(100deg,var(--accent2),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-links a{color:var(--body);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{background:var(--accent)!important;color:#fff!important;padding:9px 22px;border-radius:6px;}
+.nav-cta:hover{opacity:.82!important;}
 
 /* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:55% 45%;position:relative;overflow:hidden;}
-.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%,rgba(61,214,200,0.05),transparent 65%);pointer-events:none;}
-.hero-left{padding:148px 52px 80px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;}
-.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;opacity:0;animation:up .7s ease forwards .15s;}
-h1{font-family:'DM Serif Display',serif;font-size:clamp(50px,5.5vw,80px);line-height:1.02;color:var(--ink);margin-bottom:14px;opacity:0;animation:up .7s ease forwards .3s;}
-h1 em{font-style:italic;color:var(--gold);}
-.hero-title{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--teal);margin-bottom:30px;opacity:0;animation:up .7s ease forwards .44s;}
-.hero-desc{font-size:16px;line-height:1.78;color:var(--text-body);max-width:460px;margin-bottom:44px;opacity:0;animation:up .7s ease forwards .58s;}
-.hero-btns{display:flex;gap:12px;opacity:0;animation:up .7s ease forwards .72s;}
-.btn-p{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:13px 28px;background:var(--gold);color:#000;text-decoration:none;transition:all .2s;}
-.btn-p:hover{background:#dbbf7e;transform:translateY(-2px);}
-.btn-o{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:13px 28px;border:1px solid var(--border);color:var(--muted);text-decoration:none;transition:all .2s;}
-.btn-o:hover{border-color:var(--ink);color:var(--ink);}
-.hero-stats{display:flex;gap:44px;margin-top:60px;padding-top:28px;border-top:1px solid var(--border);opacity:0;animation:up .7s ease forwards .86s;}
-.stat-n{font-family:'DM Serif Display',serif;font-size:38px;color:var(--ink);line-height:1;}
-.stat-n sup{color:var(--gold);font-size:22px;}
-.stat-l{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-top:5px;}
-@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(61,142,255,.1) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none;}
+.hero-glow2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,.07) 0%,transparent 70%);bottom:-100px;left:10%;pointer-events:none;}
+.hero-inner{max-width:1080px;margin:0 auto;width:100%;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:var(--accent2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:22px;}
+.eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:dotpulse 2.2s ease-in-out infinite;}
+h1{font-family:var(--fh);font-size:clamp(32px,3.8vw,52px);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:10px;color:var(--white);}
+.h1-sub{font-family:var(--fh);font-size:clamp(17px,2vw,24px);font-weight:400;color:var(--accent2);margin-bottom:24px;line-height:1.3;}
+.hero-body{font-size:16px;color:var(--body);line-height:1.85;max-width:440px;margin-bottom:36px;}
+.hero-body em{font-style:italic;color:var(--white);font-weight:400;}
+.cta-group{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#1a5fd4);color:#fff;padding:14px 30px;border-radius:7px;font-size:15px;font-weight:500;text-decoration:none;border:none;cursor:pointer;font-family:var(--fb);transition:opacity .2s;}
+.btn-primary:hover{opacity:.85;}
+.btn-text{color:var(--body);font-size:14px;text-decoration:none;border-bottom:1px solid rgba(168,196,224,.3);transition:color .2s;padding-bottom:2px;}
+.btn-text:hover{color:var(--white);}
 
-/* HERO RIGHT */
-.hero-right{position:relative;overflow:hidden;}
-.hero-right::before{content:'';position:absolute;left:0;top:0;bottom:0;width:160px;background:linear-gradient(90deg,var(--bg),transparent);z-index:2;}
-.hero-canvas-wrap{position:absolute;inset:0;}
-#hero-canvas{width:100%;height:100%;}
-.hero-cards{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:40px 36px 40px 56px;}
-.hcard{background:rgba(17,20,22,0.88);border:1px solid var(--border);padding:13px 16px;backdrop-filter:blur(8px);animation:float 7s ease-in-out infinite;}
-.hcard:nth-child(2){animation-delay:-2.3s;}
-.hcard:nth-child(3){animation-delay:-4.6s;}
-.hcard:nth-child(4){animation-delay:-1.2s;}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-.hc-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:5px;display:flex;align-items:center;gap:5px;}
-.hc-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block;animation:blink 1.6s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hc-val{font-size:13px;font-weight:500;color:var(--ink);}
-.hc-val.g{color:var(--teal);}
-.hc-val.y{color:var(--gold);}
-.hc-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);margin-top:3px;}
+/* DEMO PANEL */
+.demo-panel{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:border-color .25s,transform .25s;user-select:none;}
+.demo-panel:hover{border-color:var(--accent);transform:translateY(-3px);}
+.demo-bar{background:var(--surface2);padding:9px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+.db-dot{width:7px;height:7px;border-radius:50%;}
+.db-title{font-size:11px;color:var(--body);letter-spacing:.06em;text-transform:uppercase;margin:0 auto;}
+.demo-preview{position:relative;height:280px;overflow:hidden;background:#020a14;}
+.demo-preview canvas{display:block;width:100%;height:100%;}
+.demo-tags{display:flex;gap:8px;position:absolute;top:12px;left:12px;z-index:2;}
+.demo-tag-pill{background:rgba(61,142,255,.18);border:1px solid rgba(61,142,255,.35);border-radius:20px;padding:4px 11px;font-size:10px;color:var(--accent2);letter-spacing:.06em;}
+.demo-launch{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(2,10,20,.5);transition:background .25s;z-index:3;}
+.demo-panel:hover .demo-launch{background:rgba(2,10,20,.28);}
+.launch-btn{background:linear-gradient(135deg,var(--accent),#1a5fd4);color:#fff;padding:13px 30px;border-radius:7px;font-size:15px;font-weight:500;font-family:var(--fb);display:flex;align-items:center;gap:9px;box-shadow:0 0 32px rgba(61,142,255,.45);}
+.launch-label{font-size:12px;color:rgba(200,225,255,.6);letter-spacing:.05em;}
 
-/* DIVIDER */
-.div{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 52px;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(20,32,48,.88);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.modal-overlay.open{display:flex;}
+.modal-box{width:92vw;max-width:1200px;height:88vh;background:var(--surface);border:1px solid rgba(61,142,255,.3);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;animation:modalIn .22s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.modal-bar{background:var(--surface2);padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.modal-title{font-size:13px;color:var(--body);font-weight:500;margin-right:auto;}
+.modal-close{background:none;border:none;color:var(--body);cursor:pointer;font-size:20px;line-height:1;padding:3px 8px;border-radius:4px;transition:color .2s,background .2s;}
+.modal-close:hover{color:var(--white);background:rgba(255,255,255,.1);}
+.modal-iframe{flex:1;border:none;width:100%;display:block;}
+.modal-note{padding:7px 16px;font-size:11px;color:var(--muted);background:var(--surface2);border-top:1px solid var(--border);text-align:center;flex-shrink:0;}
+.modal-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;background:var(--surface);pointer-events:none;transition:opacity .4s;}
 
-/* SECTIONS */
-section{position:relative;}
-.si{max-width:1220px;margin:0 auto;padding:96px 52px;}
-.slabel{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
-h2{font-family:'DM Serif Display',serif;font-size:clamp(34px,4vw,52px);line-height:1.1;color:var(--ink);margin-bottom:22px;}
-h2 em{font-style:italic;color:var(--teal);}
-.sbody{font-size:16px;line-height:1.8;color:var(--text-body);max-width:620px;}
+/* PROCESS */
+#process{padding:90px 48px;position:relative;z-index:1;border-top:1px solid var(--border);}
+.section-label{font-size:11px;color:var(--accent2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;}
+.section-title{font-family:var(--fh);font-size:clamp(24px,2.5vw,36px);font-weight:700;margin-bottom:48px;max-width:560px;line-height:1.2;color:var(--white);}
+.process-inner{max-width:1080px;margin:0 auto;}
+.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.step{background:var(--surface);padding:32px 28px;position:relative;}
+.step-num{font-family:var(--fh);font-size:13px;color:var(--accent);letter-spacing:.1em;margin-bottom:16px;}
+.step-title{font-family:var(--fh);font-size:20px;font-weight:700;margin-bottom:12px;line-height:1.3;color:var(--white);}
+.step-body{font-size:15px;color:var(--body);line-height:1.8;}
+.step-accent{position:absolute;top:0;left:0;width:3px;height:44px;border-radius:0 0 2px 0;}
 
-/* EXPERTISE GRID */
-.exp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-top:60px;}
-.ecard{background:var(--bg);padding:36px 30px;position:relative;overflow:hidden;transition:background .25s;}
-.ecard::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ecolor,var(--gold));transform:scaleX(0);transition:transform .35s;transform-origin:left;}
-.ecard:hover{background:var(--surface);}
-.ecard:hover::after{transform:scaleX(1);}
-.ei{font-size:26px;margin-bottom:18px;display:block;}
-.et{font-family:'DM Serif Display',serif;font-size:21px;color:var(--ink);margin-bottom:9px;}
-.eb{font-size:13px;line-height:1.72;color:var(--text-body);}
-.etags{display:flex;flex-wrap:wrap;gap:5px;margin-top:16px;}
-.etag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;padding:3px 8px;border:1px solid var(--border);color:var(--muted);border-radius:20px;text-transform:uppercase;}
-
-/* VERTICALS */
-.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:60px;}
-.vcard{background:var(--card);border:1px solid var(--border);padding:22px 18px;transition:all .22s;}
-.vcard:hover{border-color:var(--teal);transform:translateY(-4px);}
-.vi{font-size:22px;margin-bottom:10px;}
-.vt{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:5px;}
-.vd{font-size:11px;line-height:1.6;color:var(--muted);}
-
-/* TIMELINE */
-.tl{margin-top:60px;position:relative;}
-.tl::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--gold),var(--teal) 40%,var(--border));}
-.tli{padding-left:38px;margin-bottom:50px;position:relative;opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s;}
-.tli.vis{opacity:1;transform:none;}
-.tldot{position:absolute;left:-4px;top:7px;width:9px;height:9px;border-radius:50%;border:2px solid var(--gold);background:var(--bg);}
-.tldot.t{border-color:var(--teal);}
-.tldot.m{border-color:var(--muted);}
-.tldate{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:5px;}
-.tldate.t{color:var(--teal);}
-.tldate.m{color:var(--muted);}
-.tlco{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);margin-bottom:3px;}
-.tlco.m{color:var(--text-body);}
-.tlrole{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;}
-.tlbody{font-size:13.5px;line-height:1.76;color:var(--text-body);max-width:660px;}
-.tlbulls{list-style:none;margin-top:8px;}
-.tlbulls li{font-size:13px;line-height:1.72;color:var(--text-body);padding-left:16px;position:relative;margin-bottom:4px;}
-.tlbulls li::before{content:'—';position:absolute;left:0;color:var(--gold);}
-.tlchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:12px;}
-.tlchip{font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.1em;padding:3px 8px;background:var(--dim);color:var(--muted);text-transform:uppercase;}
-
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:60px;}
-.sg-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.28em;color:var(--teal);text-transform:uppercase;margin-bottom:18px;}
-.spills{display:flex;flex-wrap:wrap;gap:8px;}
-.spill{font-size:12px;padding:6px 14px;border:1px solid var(--border);color:var(--text-body);transition:all .18s;cursor:default;}
-.spill:hover{border-color:var(--gold);color:var(--gold);}
-.spill.hi{border-color:rgba(200,169,110,0.28);color:var(--ink);}
-
-/* EDUCATION */
-.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px;}
-.edu-c{background:var(--card);border:1px solid var(--border);padding:26px 22px;}
-.edu-deg{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);margin-bottom:4px;}
-.edu-spec{font-size:13px;color:var(--gold);font-weight:500;margin-bottom:4px;}
-.edu-school{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.12em;}
-
-/* REC */
-.rec{background:var(--card);border:1px solid var(--border);padding:30px;margin-top:20px;position:relative;}
-.rec::before{content:'"';position:absolute;top:14px;left:22px;font-family:'DM Serif Display',serif;font-size:72px;line-height:1;color:var(--dim);}
-.rec-body{font-size:15px;line-height:1.76;color:var(--text-body);font-style:italic;padding-left:20px;margin-bottom:18px;}
-.rec-name{font-size:12px;font-weight:600;color:var(--ink);}
-.rec-role{font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;margin-top:2px;}
-
-/* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;margin-top:44px;align-items:start;}
-.clinks{display:flex;flex-direction:column;gap:12px;}
-.clink{display:flex;align-items:center;gap:16px;padding:16px 18px;background:var(--card);border:1px solid var(--border);text-decoration:none;transition:all .2s;}
-.clink:hover{border-color:var(--gold);transform:translateX(4px);}
-.clink-icon{font-size:18px;width:34px;text-align:center;}
-.clink-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;}
-.clink-val{font-size:14px;color:var(--ink);margin-top:2px;}
-.ccta{padding:36px;background:var(--card);border:1px solid var(--border);}
-.ccta-t{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);margin-bottom:10px;}
-.ccta-b{font-size:14px;line-height:1.72;color:var(--text-body);margin-bottom:22px;}
+/* CTA */
+#cta{padding:100px 48px;position:relative;z-index:1;border-top:1px solid var(--border);}
+.cta-inner{max-width:680px;margin:0 auto;text-align:center;}
+.cta-question{font-family:var(--fh);font-size:clamp(26px,3vw,42px);font-weight:700;line-height:1.2;margin-bottom:18px;letter-spacing:-.02em;color:var(--white);}
+.cta-sub{font-size:17px;color:var(--body);line-height:1.8;margin-bottom:44px;max-width:500px;margin-left:auto;margin-right:auto;}
+.cta-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:40px;text-align:left;}
+.cta-card-title{font-family:var(--fh);font-size:17px;font-weight:600;margin-bottom:20px;color:var(--accent2);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg label{font-size:13px;color:var(--body);letter-spacing:.04em;text-transform:uppercase;}
+input,textarea,select{background:rgba(15,32,64,.8);border:1px solid var(--border);border-radius:7px;padding:11px 14px;color:var(--white);font-family:var(--fb);font-size:15px;outline:none;width:100%;transition:border-color .2s;}
+input::placeholder,textarea::placeholder{color:var(--muted);}
+input:focus,textarea:focus,select:focus{border-color:var(--accent);}
+select{color:var(--body);}
+select option{background:#0f2040;}
+textarea{resize:vertical;min-height:90px;grid-column:1/-1;}
+.form-submit{width:100%;margin-top:6px;padding:14px;background:linear-gradient(135deg,var(--accent),#1a5fd4);color:#fff;border:none;border-radius:7px;font-size:15px;font-weight:500;font-family:var(--fb);cursor:pointer;transition:opacity .2s;}
+.form-submit:hover{opacity:.85;}
+.form-note{text-align:center;font-size:13px;color:var(--muted);margin-top:14px;}
+.form-success{display:none;text-align:center;padding:28px;color:var(--teal);font-size:15px;line-height:1.8;}
 
 /* FOOTER */
-footer{border-top:1px solid var(--border);padding:26px 52px;display:flex;align-items:center;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--muted);}
-.fl{font-family:'DM Serif Display',serif;font-size:16px;color:var(--muted);}
-.fl span{color:var(--gold);}
+footer{border-top:1px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;}
+.footer-left{font-size:14px;color:var(--muted);}
+.footer-right{display:flex;gap:24px;}
+.footer-right a{font-size:14px;color:var(--body);text-decoration:none;transition:color .2s;}
+.footer-right a:hover{color:var(--white);}
 
-/* REVEAL */
-.rv{opacity:0;transform:translateY(20px);transition:opacity .55s,transform .55s;}
-.rv.vis{opacity:1;transform:none;}
+/* ANIMATIONS */
+@keyframes dotpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.fu{opacity:0;animation:fadeUp .6s ease forwards;}
+.fu.d1{animation-delay:.15s}.fu.d2{animation-delay:.3s}.fu.d3{animation-delay:.45s}
 
-@media(max-width:1024px){
-  .hero{grid-template-columns:1fr;}
-  .hero-right{display:none;}
-  .exp-grid{grid-template-columns:1fr 1fr;}
-  .vgrid{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:700px){
+@media(max-width:860px){
   nav{padding:14px 20px;}
-  .nav-links{display:none;}
-  .si{padding:72px 24px;}
-  .hero-left{padding:120px 24px 60px;}
-  .exp-grid,.skills-grid,.edu-grid,.contact-grid{grid-template-columns:1fr;}
-  .vgrid{grid-template-columns:1fr 1fr;}
-  .hero-stats{gap:22px;}
-  footer{padding:20px 24px;flex-direction:column;gap:6px;text-align:center;}
+  .nav-links a:not(.nav-cta){display:none;}
+  #hero{padding:100px 20px 60px;}
+  .hero-inner{grid-template-columns:1fr;}
+  .demo-panel{display:none;}
+  #process,#cta{padding:60px 20px;}
+  .process-steps{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:24px 20px;}
+  .modal-box{width:100vw;height:100vh;border-radius:0;}
 }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="curring"></div>
-
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">Jeff <span>Junker</span></div>
-  <ul class="nav-links">
-    <li><a href="#expertise">Expertise</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#verticals">Verticals</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="mailto:j2junker@gmail.com" class="nav-cta">Get in Touch</a>
+  <div class="logo">J2Analytics</div>
+  <div class="nav-links">
+    <a href="#process">Approach</a>
+    <a href="#cta" class="nav-cta">Book Discovery Call</a>
+  </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="eyebrow">J2Analytics · AI Consulting · Berlin, MA</div>
-    <h1>Turning Data<br>Into <em>Decisions</em></h1>
-    <div class="hero-title">AI Solutions · Computer Vision · Digital Twins · Agentic Workflows</div>
-    <p class="hero-desc">17+ years guiding enterprises from operational complexity to actionable intelligence. Founder of J2Analytics — specializing in AI, computer vision, and modular agent architectures.</p>
-    <div class="hero-btns">
-      <a href="#contact" class="btn-p">Work Together</a>
-      <a href="#experience" class="btn-o">View Experience</a>
-    </div>
-    <div class="hero-stats">
-      <div><div class="stat-n">17<sup>+</sup></div><div class="stat-l">Years Experience</div></div>
-      <div><div class="stat-n">60<sup>+</sup></div><div class="stat-l">Verified Skills</div></div>
-      <div><div class="stat-n">WPI</div><div class="stat-l">BSEE · MBA</div></div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-canvas-wrap"><canvas id="hero-canvas"></canvas></div>
-    <div class="hero-cards">
-      <div class="hcard">
-        <div class="hc-label"><span class="hc-dot"></span>Active System</div>
-        <div class="hc-val g">Digital Twin Live</div>
-        <div class="hc-sub">MA Traffic Network · 35+ routes</div>
-      </div>
-      <div class="hcard">
-        <div class="hc-label">Agent Pipeline</div>
-        <div class="hc-val">MBTA · NWS · MassDOT</div>
-        <div class="hc-sub">3 feeds · 30s refresh cycle</div>
-      </div>
-      <div class="hcard">
-        <div class="hc-label">CV Inference</div>
-        <div class="hc-val y">Object Tracking</div>
-        <div class="hc-sub">GPU-accelerated · Rules-based alerts</div>
-      </div>
-      <div class="hcard">
-        <div class="hc-label">Workflow Status</div>
-        <div class="hc-val g">Agentic Stack Ready</div>
-        <div class="hc-sub">Modular · API-first · Scalable</div>
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="eyebrow fu"><span class="eyebrow-dot"></span>AI Workflow Consulting</div>
+      <h1 class="fu d1">What could AI do<br>for your workflow?</h1>
+      <p class="h1-sub fu d1">Explore the potential — without the hype.</p>
+      <p class="hero-body fu d2">
+        Most organizations already have the data. The problem is that too much time gets spent <em>reviewing it</em> — and not enough acting on it.<br><br>
+        J2Analytics starts with <em>information flow discovery</em> — mapping where your processes stall, where data review is eating hours it shouldn't, and where a well-placed AI enhancement could give that time back.
+      </p>
+      <div class="cta-group fu d3">
+        <a href="#cta" class="btn-primary">Book a Discovery Call</a>
+        <a href="#process" class="btn-text">See how it works →</a>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="div"></div>
-
-<!-- EXPERTISE -->
-<section id="expertise">
-<div class="si">
-  <div class="slabel rv">Core Expertise</div>
-  <h2 class="rv">AI that <em>Works</em><br>for Your Business</h2>
-  <p class="sbody rv">Computer engineering foundation. MBA in Technology Management. 30 years bridging deep technical capability with strategic business outcomes — translating complex AI possibilities into deployable, scalable solutions.</p>
-  <div class="exp-grid">
-    <div class="ecard rv" style="--ecolor:var(--teal)">
-      <span class="ei">🤖</span>
-      <div class="et">Agentic AI Systems</div>
-      <div class="eb">Modular agent solution stacks — autonomous pipelines that observe, reason, and act on live data. Information flow discovery through production deployment.</div>
-      <div class="etags"><span class="etag">Multi-Agent</span><span class="etag">API Design</span><span class="etag">Automation</span></div>
-    </div>
-    <div class="ecard rv" style="--ecolor:var(--gold)">
-      <span class="ei">👁</span>
-      <div class="et">Computer Vision</div>
-      <div class="eb">GPU-enabled AI object detection, rules-based alerting, tracking, and LIDAR integration for stadiums, airports, transit, and smart city deployments.</div>
-      <div class="etags"><span class="etag">Object Detection</span><span class="etag">LIDAR</span><span class="etag">GPU Inference</span></div>
-    </div>
-    <div class="ecard rv" style="--ecolor:var(--blue)">
-      <span class="ei">🌐</span>
-      <div class="et">Digital Twins</div>
-      <div class="eb">Real-time virtual replicas of physical systems — traffic, power, water, construction impact. Live data integration with simulation and predictive analysis.</div>
-      <div class="etags"><span class="etag">Real-time Data</span><span class="etag">Simulation</span><span class="etag">IoT</span></div>
-    </div>
-    <div class="ecard rv" style="--ecolor:var(--gold)">
-      <span class="ei">⚡</span>
-      <div class="et">Operational Workflows</div>
-      <div class="eb">Information flow discovery to identify process bottlenecks. Leverage existing data for actionable intelligence — insights that drive decisions, not just dashboards.</div>
-      <div class="etags"><span class="etag">Process Mining</span><span class="etag">Data Intelligence</span><span class="etag">ROI</span></div>
-    </div>
-    <div class="ecard rv" style="--ecolor:var(--teal)">
-      <span class="ei">🏗</span>
-      <div class="et">Infrastructure Architecture</div>
-      <div class="eb">Solution sizing integrating physical/virtualized compute with file/SAN storage and AI software stacks. Scale from pilot to enterprise production.</div>
-      <div class="etags"><span class="etag">Dell PowerScale</span><span class="etag">VMware</span><span class="etag">Storage</span></div>
-    </div>
-    <div class="ecard rv" style="--ecolor:var(--blue)">
-      <span class="ei">🤝</span>
-      <div class="et">Solution Strategy</div>
-      <div class="eb">Product strategy, partner development, and technical marketing. Proof-of-value scoping, pilot design, and cross-functional team leadership.</div>
-      <div class="etags"><span class="etag">Pilot Design</span><span class="etag">GTM Strategy</span><span class="etag">Partnerships</span></div>
+    <div class="demo-panel fu d2" id="sc-panel">
+      <div class="demo-bar">
+        <div class="db-dot" style="background:#ff5f57"></div>
+        <div class="db-dot" style="background:#febc2e"></div>
+        <div class="db-dot" style="background:#28c840"></div>
+        <span class="db-title" id="sc-bar">Live Public Data Demos</span>
+      </div>
+      <div class="demo-preview" id="sc-preview" style="cursor:pointer;" onclick="scClick()">
+        <img id="sc-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block;transition:opacity .3s;">
+        <div class="demo-tags" id="sc-tags"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:8px 14px 10px;background:linear-gradient(transparent,rgba(2,10,20,.85));z-index:3;display:flex;align-items:flex-end;justify-content:space-between;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#f0f6ff;margin-bottom:1px;" id="sc-title"></div>
+            <div style="font-size:11px;color:rgba(196,216,238,.7);" id="sc-desc"></div>
+          </div>
+          <div style="display:flex;gap:5px;" id="sc-dots"></div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.1);z-index:4;">
+          <div id="sc-prog" style="height:100%;background:rgba(61,142,255,.75);width:0%;transition:width .08s linear;"></div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  </div>
 </section>
 
-<div class="div"></div>
-
-<!-- VERTICALS -->
-<section id="verticals">
-<div class="si">
-  <div class="slabel rv">Industry Verticals</div>
-  <h2 class="rv">Proven Across <em>Industries</em></h2>
-  <div class="vgrid">
-    <div class="vcard rv"><div class="vi">✈️</div><div class="vt">Airport Safety & Security</div><div class="vd">Redundant virtualized datacenters, dual record streams, LIDAR for landside/airside/TSA. Multi-stakeholder AI tooling.</div></div>
-    <div class="vcard rv"><div class="vi">🏟</div><div class="vt">Stadiums & Venues</div><div class="vd">Virtualized VMS with GPU AI object detection, rules-based alerting, and object tracking on PowerScale OneFS.</div></div>
-    <div class="vcard rv"><div class="vi">🚦</div><div class="vt">Traffic & Transportation</div><div class="vd">Digital twin proposals for traffic management, construction impact modeling, and agent/API data exchange architectures.</div></div>
-    <div class="vcard rv"><div class="vi">🚌</div><div class="vt">Bus & Rail Safety</div><div class="vd">Transport safety infrastructure combining video surveillance and LIDAR for bus, train, and transit authority deployments.</div></div>
-    <div class="vcard rv"><div class="vi">🏙</div><div class="vt">Smart Safe City</div><div class="vd">Intersection and campus coverage scaling to 5,000+ cameras. Overwatch use cases with intelligent alerting and analytics.</div></div>
-    <div class="vcard rv"><div class="vi">💧</div><div class="vt">Public Safety & Utilities</div><div class="vd">Digital twin pilots for water management and public safety operations integrating live sensor feeds with predictive models.</div></div>
-    <div class="vcard rv"><div class="vi">🛒</div><div class="vt">Retail Intelligence</div><div class="vd">Loss prevention, customer traffic profiling, and operational intelligence using computer vision and behavioral analytics.</div></div>
-    <div class="vcard rv"><div class="vi">📡</div><div class="vt">Broadcast & Media</div><div class="vd">8 years at Thomson Grass Valley leading broadcast technology — audio/video workflow, shared storage, QoS production systems.</div></div>
+<!-- MODAL -->
+<div class="modal-overlay" id="demo-modal" onclick="closeOnBg(event)">
+  <div class="modal-box">
+    <div class="modal-bar">
+      <div class="db-dot" style="background:#ff5f57"></div>
+      <div class="db-dot" style="background:#febc2e"></div>
+      <div class="db-dot" style="background:#28c840"></div>
+      <span class="modal-title">MA Highway Traffic Digital Twin — J2Analytics Demo</span>
+      <button class="modal-close" onclick="closeDemo()">✕</button>
+    </div>
+    <iframe class="modal-iframe" id="demo-iframe" src="" title="MA Traffic Twin Demo"></iframe>
+    <div class="modal-note">MA Highway Traffic Digital Twin · Dijkstra routing · MBTA + MassDOT live data · Press Esc or click outside to close</div>
   </div>
 </div>
-</section>
 
-<div class="div"></div>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-<div class="si">
-  <div class="slabel rv">Career Timeline</div>
-  <h2 class="rv">30 Years of <em>Building</em></h2>
-  <div class="tl">
-
-    <div class="tli">
-      <div class="tldot"></div>
-      <div class="tldate">Oct 2025 – Present</div>
-      <div class="tlco">J2Analytics</div>
-      <div class="tlrole">Founder & Owner · AI Consulting</div>
-      <ul class="tlbulls">
-        <li>Founded AI consulting firm dedicated to enhancing operational workflows</li>
-        <li>Information flow discovery — identify process blocks and potential AI enhancements</li>
-        <li>Guide clients in leveraging existing data for actionable intelligence beyond automation</li>
-        <li>Collaborate with software partners to implement tailored modular agent solution stacks</li>
-      </ul>
-      <div class="tlchips"><span class="tlchip">Agentic AI</span><span class="tlchip">Digital Twins</span><span class="tlchip">Workflow Optimization</span><span class="tlchip">Solution Architecture</span></div>
-    </div>
-
-    <div class="tli">
-      <div class="tldot t"></div>
-      <div class="tldate t">July 2018 – Sept 2025 · 7 years</div>
-      <div class="tlco">Dell Technologies</div>
-      <div class="tlrole">Computer Vision AI Solution Development</div>
-      <ul class="tlbulls">
-        <li>Customer engagement and discovery with business and process owners across enterprise accounts</li>
-        <li>Scoped and planned proof-of-value pilots — matrixed with Sales, Lab, and Engineering</li>
-        <li>Designed infrastructure specs integrating physical/virtualized compute, File/SAN, VMS, and AI object detection</li>
-        <li>Delivered stadium, airport, smart-city, transit, retail, and digital twin pilot proposals</li>
-        <li>LIDAR use cases — airport landside, TSA, airside, and overwatch deployments</li>
-      </ul>
-      <div class="tlchips"><span class="tlchip">Computer Vision</span><span class="tlchip">LIDAR</span><span class="tlchip">GPU AI</span><span class="tlchip">Digital Twins</span><span class="tlchip">PowerScale</span><span class="tlchip">Public Safety</span></div>
-    </div>
-
-    <div class="tli">
-      <div class="tldot m"></div>
-      <div class="tldate m">May 2014 – June 2018 · 4 years</div>
-      <div class="tlco m">Dell EMC</div>
-      <div class="tlrole">Video Solutions Consultant</div>
-      <div class="tlbody">Drove go-to-market strategy for Video Surveillance and Safety Security through infrastructure validation testing at scale. Delivered white papers, solution briefs, sales training, webinars, and event support. Consulting on sizing and architecture across enterprise accounts.</div>
-      <div class="tlchips"><span class="tlchip">VMS</span><span class="tlchip">Technical Marketing</span><span class="tlchip">Solution Briefs</span><span class="tlchip">Infrastructure</span></div>
-    </div>
-
-    <div class="tli">
-      <div class="tldot m"></div>
-      <div class="tldate m">Aug 2008 – May 2014 · 6 years</div>
-      <div class="tlco m">Dell EqualLogic–Compellent</div>
-      <div class="tlrole">Technical Consultant · Virtualized Storage</div>
-      <div class="tlbody">Designed and deployed virtualized iSCSI storage for scalable media production. Managed Nashua Development Center Technical Marketing labs — iSCSI for video analytics, IP surveillance, and VoD. Performance testing on VMware across Windows and Linux.</div>
-      <div class="tlchips"><span class="tlchip">iSCSI</span><span class="tlchip">VMware</span><span class="tlchip">Storage Architecture</span><span class="tlchip">Performance Testing</span></div>
-    </div>
-
-    <div class="tli">
-      <div class="tldot m"></div>
-      <div class="tldate m">2001 – 2008 · 7 years</div>
-      <div class="tlco m">Thomson Grass Valley</div>
-      <div class="tlrole">Senior Product Manager · Broadcast Technology</div>
-      <div class="tlbody">Led broadcast technology product line — audio/video/media workflow tools. Evolved niche news editing into broader software-based production workflows. Pioneered QoS-based client technology for scalable shared storage and archive architecture.</div>
-      <div class="tlchips"><span class="tlchip">Product Management</span><span class="tlchip">Broadcast</span><span class="tlchip">Media Workflow</span><span class="tlchip">QoS Architecture</span></div>
-    </div>
-
-    <div class="tli">
-      <div class="tldot m"></div>
-      <div class="tldate m">1998 – 2001</div>
-      <div class="tlco m">InfoLibria</div>
-      <div class="tlrole">Director of Product Management</div>
-      <div class="tlbody">Defined technical scope of early product development — market analysis, engineering feasibility, hardware platform prototyping. Technical review of cache-streaming appliance, PCI bridge/switch design. Managed OEM vendor selection, build process, product roadmaps, and competitive analysis.</div>
-    </div>
-
-    <div class="tli">
-      <div class="tldot m"></div>
-      <div class="tldate m">1995 – 1998 · 1992 – 1995</div>
-      <div class="tlco m">Sync Research · Rockwell International</div>
-      <div class="tlrole">Product Manager · Engineering Manager</div>
-      <div class="tlbody">Technology evangelism, partner and carrier development, VoFR/VoIP partnerships at Sync Research. Engineering management at Rockwell — OEM technical support, FDDI interface driver development, and military/commercial vision systems and video analytics.</div>
-      <div class="tlchips"><span class="tlchip">Vision Systems</span><span class="tlchip">SNMP Agents</span><span class="tlchip">VoIP</span><span class="tlchip">FDDI</span><span class="tlchip">Video Analytics</span></div>
-    </div>
-
-  </div>
-</div>
-</section>
-
-<div class="div"></div>
-
-<!-- SKILLS -->
-<section>
-<div class="si">
-  <div class="slabel rv">Skills · 60+ Verified on LinkedIn</div>
-  <h2 class="rv">Technical <em>Depth</em></h2>
-  <div class="skills-grid">
-    <div class="rv">
-      <div class="sg-title">AI & Vision</div>
-      <div class="spills">
-        <span class="spill hi">Computer Vision</span><span class="spill hi">Agentic AI</span><span class="spill hi">Digital Twins</span>
-        <span class="spill">Object Detection</span><span class="spill">LIDAR</span><span class="spill">GPU AI Inference</span>
-        <span class="spill">Machine Learning</span><span class="spill">Workflow Automation</span><span class="spill">Multi-Agent Systems</span><span class="spill">API Integration</span>
+<section id="process">
+  <div class="process-inner">
+    <div class="section-label">The Approach</div>
+    <div class="section-title">Three steps from curiosity to working AI</div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-accent" style="background:linear-gradient(180deg,var(--accent),transparent)"></div>
+        <div class="step-num">01 — DISCOVER</div>
+        <div class="step-title">Information Flow Discovery</div>
+        <div class="step-body">We map your existing workflows and data — not to impress you with a diagram, but to find the specific points where a well-placed AI enhancement would actually make a difference.</div>
       </div>
-    </div>
-    <div class="rv">
-      <div class="sg-title">Infrastructure & Platform</div>
-      <div class="spills">
-        <span class="spill hi">Dell PowerScale OneFS</span><span class="spill hi">VMware</span>
-        <span class="spill">iSCSI Storage</span><span class="spill">SAN Architecture</span><span class="spill">GPU Clusters</span>
-        <span class="spill">VMS Systems</span><span class="spill">Virtualization</span><span class="spill">Linux / Windows</span>
+      <div class="step">
+        <div class="step-accent" style="background:linear-gradient(180deg,var(--accent2),transparent)"></div>
+        <div class="step-num">02 — DESIGN</div>
+        <div class="step-title">Stop Reviewing. Start Acting.</div>
+        <div class="step-body">If your team spends hours each week pulling reports, cross-referencing spreadsheets, or waiting on manual summaries — that's not an information problem. It's an automation opportunity. We identify where AI can compress that review cycle and surface what matters, automatically.</div>
       </div>
-    </div>
-    <div class="rv">
-      <div class="sg-title">Strategy & Leadership</div>
-      <div class="spills">
-        <span class="spill hi">Solution Architecture</span><span class="spill hi">Product Strategy</span>
-        <span class="spill">Alliance Development</span><span class="spill">Technical Marketing</span>
-        <span class="spill">Proof of Value Design</span><span class="spill">Cross-functional Leadership</span><span class="spill">Sales Engineering</span>
-      </div>
-    </div>
-    <div class="rv">
-      <div class="sg-title">Safety Security & Verticals</div>
-      <div class="spills">
-        <span class="spill hi">Safety Security</span>
-        <span class="spill">IP Surveillance</span><span class="spill">Smart City</span><span class="spill">Transit Systems</span>
-        <span class="spill">Airport Operations</span><span class="spill">Broadcast Media</span><span class="spill">Retail Analytics</span>
+      <div class="step">
+        <div class="step-accent" style="background:linear-gradient(180deg,var(--teal),transparent)"></div>
+        <div class="step-num">03 — BUILD</div>
+        <div class="step-title">Modular Agent Solution Stacks</div>
+        <div class="step-body">Working with software partners, we implement AI solutions tailored to your operation — modular by design so they grow with you, not around you.</div>
       </div>
     </div>
   </div>
-</div>
 </section>
 
-<div class="div"></div>
-
-<!-- EDUCATION -->
-<section>
-<div class="si">
-  <div class="slabel rv">Education</div>
-  <h2 class="rv">Worcester Polytechnic <em>Institute</em></h2>
-  <div class="edu-grid">
-    <div class="edu-c rv">
-      <div class="edu-deg">BSEE</div>
-      <div class="edu-spec">Computer Engineering · With High Distinction</div>
-      <div class="edu-school">Worcester Polytechnic Institute · WPI</div>
-    </div>
-    <div class="edu-c rv">
-      <div class="edu-deg">MBA</div>
-      <div class="edu-spec">Technology Management</div>
-      <div class="edu-school">Worcester Polytechnic Institute · WPI</div>
-    </div>
-  </div>
-  <div style="margin-top:44px" class="rv">
-    <div class="slabel">LinkedIn Recommendation</div>
-    <div class="rec">
-      <p class="rec-body">His combination of marketing savvy and technical acumen made him an excellent product manager that could translate market needs to product requirements. He worked incredibly hard and had a lot of passion for the products he was developing with the engineering team.</p>
-      <div class="rec-name">Ted Rogers · Mobile Architect + Developer</div>
-      <div class="rec-role">Worked with Jeff at Thomson Grass Valley</div>
-    </div>
-  </div>
-</div>
-</section>
-
-<div class="div"></div>
-
-<!-- CONTACT -->
-<section id="contact">
-<div class="si">
-  <div class="slabel rv">Get in Touch</div>
-  <h2 class="rv">Let's Build Something <em>Intelligent</em></h2>
-  <p class="sbody rv" style="margin-bottom:0">Available for consulting engagements, solution architecture, pilot design, and speaking on AI, computer vision, and digital twin topics.</p>
-  <div class="contact-grid">
-    <div class="clinks rv">
-      <a href="mailto:j2junker@gmail.com" class="clink">
-        <div class="clink-icon">✉️</div>
-        <div><div class="clink-label">Email</div><div class="clink-val">j2junker@gmail.com</div></div>
-      </a>
-      <a href="tel:+17742581892" class="clink">
-        <div class="clink-icon">📞</div>
-        <div><div class="clink-label">Phone</div><div class="clink-val">774-258-1892</div></div>
-      </a>
-      <a href="https://www.linkedin.com/in/jeff-junker" target="_blank" rel="noopener" class="clink">
-        <div class="clink-icon">💼</div>
-        <div><div class="clink-label">LinkedIn</div><div class="clink-val">linkedin.com/in/jeff-junker</div></div>
-      </a>
-      <a href="#" class="clink">
-        <div class="clink-icon">📍</div>
-        <div><div class="clink-label">Location</div><div class="clink-val">Berlin, MA · Remote & On-site</div></div>
-      </a>
-    </div>
-    <div class="ccta rv">
-      <div class="ccta-t">Ready to explore what AI can do for your operations?</div>
-      <p class="ccta-b">Whether you're looking to understand your data landscape, design an agentic pipeline, pilot a computer vision deployment, or build a digital twin — let's start with a conversation.</p>
-      <a href="mailto:j2junker@gmail.com?subject=AI Consulting Inquiry" class="btn-p">Start a Conversation →</a>
+<section id="cta">
+  <div class="cta-inner">
+    <div class="cta-question">How much of your week<br>is spent reviewing data<br>instead of using it?</div>
+    <p class="cta-sub">If that question lands — it's worth a conversation. A discovery call helps us figure out together whether there's an AI opportunity in your workflow, and what it might actually look like.</p>
+    <div class="cta-card">
+      <div class="cta-card-title">Book a Discovery Call</div>
+      <form id="contact-form" action="https://formspree.io/f/meepeorn" method="POST" onsubmit="handleSubmit(event)">
+        <div class="form-grid">
+          <div class="fg"><label>Name</label><input type="text" placeholder="Jeff Smith" required=""></div>
+          <div class="fg"><label>Organization</label><input type="text" placeholder="City of Springfield"></div>
+          <div class="fg"><label>Email</label><input type="email" placeholder="you@organization.com" required=""></div>
+          <div class="fg">
+            <label>Area of interest</label>
+            <select>
+              <option value="">Select one...</option>
+              <option>Workflow automation</option>
+              <option>Computer vision / safety</option>
+              <option>Digital twin / simulation</option>
+              <option>Infrastructure &amp; AI architecture</option>
+              <option>Not sure yet — exploring</option>
+            </select>
+          </div>
+          <textarea placeholder="Briefly describe what you're working on or what's prompting your interest in AI..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Request Discovery Call →</button>
+      </form>
+      <div class="form-success" id="form-success">
+        Thanks — Jeff will reach out within one business day to find a time.<br>
+        <span style="color:var(--muted);font-size:13px;">jeff@j2analytics.ai · Berlin, MA</span>
+      </div>
+      <p class="form-note">No commitment. Just a conversation.</p>
     </div>
   </div>
-</div>
 </section>
 
 <footer>
-  <div class="fl">Jeff <span>Junker</span> · J2Analytics</div>
-  <div>Berlin, MA · 774-258-1892 · j2junker@gmail.com</div>
-  <div>BSEE · MBA · WPI · AI Solutions</div>
+  <div class="footer-left">© 2026 J2Analytics LLC · Berlin, MA</div>
+  <div class="footer-right">
+    <a href="mailto:jeff@j2analytics.ai">jeff@j2analytics.ai</a>
+    <a href="https://www.linkedin.com/in/jeff-junker" target="_blank">LinkedIn</a>
+  </div>
 </footer>
 
 <script>
-/* CURSOR */
-const cur=document.getElementById('cur'),ring=document.getElementById('curring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-function animR(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);}animR();
-document.querySelectorAll('a,button,.ecard,.vcard').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('hover');ring.classList.add('hover');});el.addEventListener('mouseleave',()=>{cur.classList.remove('hover');ring.classList.remove('hover');});});
-
-/* HERO CANVAS */
-const canvas=document.getElementById('hero-canvas');
-if(canvas){
-  const ctx=canvas.getContext('2d');
-  let W,H,nodes=[];
-  function resize(){
-    const p=canvas.parentElement.getBoundingClientRect();
-    W=canvas.width=p.width;H=canvas.height=p.height;
-    nodes=[];
-    for(let i=0;i<45;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.8+.8});
-  }
+/* ── PREVIEW MAP ── */
+(function(){
+  const cv=document.getElementById('preview-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  function resize(){cv.width=cv.offsetWidth;cv.height=cv.offsetHeight||280;}
+  resize();window.addEventListener('resize',resize);
+  const hways=[
+    {pts:[[.15,.38],[.25,.2],[.45,.13],[.65,.2],[.79,.32],[.83,.5],[.79,.67],[.65,.77],[.45,.82],[.25,.73],[.15,.57],[.15,.38]],col:'#22c55e',name:'I-95/128'},
+    {pts:[[.02,.53],[.2,.51],[.38,.49],[.57,.47],[.74,.45],[.95,.43]],col:'#facc15',name:'I-90'},
+    {pts:[[.47,.04],[.46,.25],[.45,.46],[.44,.67],[.43,.92]],col:'#60a5fa',name:'I-93'},
+    {pts:[[.44,.13],[.49,.3],[.54,.48],[.57,.64],[.61,.8],[.64,.94]],col:'#60a5fa',name:'Rte 3'},
+    {pts:[[.17,.07],[.11,.22],[.09,.42],[.11,.6],[.17,.76],[.27,.88]],col:'#a78bfa',name:'I-495'},
+  ];
+  const dots=[];
+  hways.forEach(h=>{for(let i=0;i<8;i++)dots.push({hw:h,t:Math.random(),spd:(.002+Math.random()*.003)*(Math.random()>.5?1:-1)});});
+  let tick=0;
+  function getPos(hw,t){const p=hw.pts,s=t*(p.length-1),i=Math.min(Math.floor(s),p.length-2),f=s-i;return{x:(p[i][0]+(p[i+1][0]-p[i][0])*f)*cv.width,y:(p[i][1]+(p[i+1][1]-p[i][1])*f)*cv.height};}
   function draw(){
-    ctx.clearRect(0,0,W,H);
-    nodes.forEach((a,i)=>{
-      nodes.slice(i+1).forEach(b=>{
-        const d=Math.hypot(a.x-b.x,a.y-b.y);
-        if(d<130){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(61,214,200,${(1-d/130)*.12})`;ctx.lineWidth=.5;ctx.stroke();}
-      });
-      ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fillStyle='rgba(61,214,200,.35)';ctx.fill();
-      a.x+=a.vx;a.y+=a.vy;
-      if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1;
+    tick++;
+    ctx.clearRect(0,0,cv.width,cv.height);
+    ctx.fillStyle='#020a14';ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.strokeStyle='rgba(61,142,255,.05)';ctx.lineWidth=.5;
+    for(let x=0;x<cv.width;x+=36){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+    for(let y=0;y<cv.height;y+=36){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+    hways.forEach(h=>{
+      ctx.strokeStyle=h.col+'44';ctx.lineWidth=6;ctx.lineCap='round';ctx.lineJoin='round';
+      ctx.beginPath();h.pts.forEach((p,i)=>{i?ctx.lineTo(p[0]*cv.width,p[1]*cv.height):ctx.moveTo(p[0]*cv.width,p[1]*cv.height);});ctx.stroke();
+      ctx.strokeStyle=h.col+'cc';ctx.lineWidth=1.5;ctx.setLineDash([5,9]);
+      ctx.beginPath();h.pts.forEach((p,i)=>{i?ctx.lineTo(p[0]*cv.width,p[1]*cv.height):ctx.moveTo(p[0]*cv.width,p[1]*cv.height);});ctx.stroke();ctx.setLineDash([]);
+      const m=h.pts[Math.floor(h.pts.length/2)];
+      ctx.fillStyle=h.col+'dd';ctx.font='bold 8px DM Sans';ctx.fillText(h.name,m[0]*cv.width+5,m[1]*cv.height-4);
     });
+    dots.forEach(d=>{
+      d.t+=d.spd;if(d.t>1)d.t=0;if(d.t<0)d.t=1;
+      const p=getPos(d.hw,d.t);
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,7);
+      g.addColorStop(0,d.hw.col+'66');g.addColorStop(1,'transparent');
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,7,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fillStyle=d.hw.col;ctx.fill();
+    });
+    const ia=Math.sin(tick*.06)*.5+.5;
+    ctx.beginPath();ctx.arc(cv.width*.46,cv.height*.5,7+ia*4,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(255,80,80,${ia*.8})`;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(cv.width*.46,cv.height*.5,3,0,Math.PI*2);ctx.fillStyle='#ff5050';ctx.fill();
     requestAnimationFrame(draw);
   }
-  window.addEventListener('resize',resize);resize();draw();
-}
+  draw();
+})();
 
-/* SCROLL REVEAL */
-const rvEls=document.querySelectorAll('.rv,.tli');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach((e,idx)=>{
-    if(e.isIntersecting){
-      setTimeout(()=>e.target.classList.add('vis'),idx*60);
+/* ── MODAL ── */
+function openDemo(){
+  document.getElementById('demo-iframe').src='https://jsj-ai.github.io/ma-traffic-twin/';
+  document.getElementById('demo-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDemo(){
+  document.getElementById('demo-modal').classList.remove('open');
+  document.getElementById('demo-iframe').src='';
+  document.body.style.overflow='';
+}
+function closeOnBg(e){if(e.target===document.getElementById('demo-modal'))closeDemo();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDemo();});
+
+/* ── FORM ── */
+async function handleSubmit(e){
+  e.preventDefault();
+  const form=document.getElementById('contact-form');
+  const data=new FormData(form);
+  try{
+    const res=await fetch('https://formspree.io/f/meepeorn',{method:'POST',body:data,headers:{Accept:'application/json'}});
+    if(res.ok){
+      form.style.display='none';
+      document.getElementById('form-success').style.display='block';
+    } else {
+      alert('Something went wrong — please email jeff@j2analytics.ai directly.');
     }
-  });
-},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
-rvEls.forEach(el=>obs.observe(el));
+  } catch(err){
+    alert('Something went wrong — please email jeff@j2analytics.ai directly.');
+  }
+}
 </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e955bca7d585a4b',t:'MTc3NTY5NDE1OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;"></iframe><script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;dc57ee0b36c24715842b687010936399&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous">
+(function(){
+  var TITLES=["MA Traffic Twin","MBTA Live","ISO-NE Grid Monitor","MA NWSS Wastewater","Needham Water SCADA"];
+  var DESCS=["Live MassDOT sensors, incidents, NEXRAD radar","Subway and Commuter Rail vehicles, arrivals, alerts","New England power grid, LMP pricing, fuel mix","CDC wastewater surveillance, COVID, Flu A, RSV","Municipal water system, pressure, flow, AI autofill"];
+  var TAGS=["Transportation","Transit","Energy","Public Health","Infrastructure"];
+  var HREFS=["https://jsj-ai.github.io/ma-traffic-twin/","https://jsj-ai.github.io/mbta-live/","https://jsj-ai.github.io/NEISO/","https://jsj-ai.github.io/MA-NWSS-Wastewater/","https://jsj-ai.github.io/Needham-Water/"];
+  var IMGS=["__TRAFFIC__","__MBTA__","__NEISO__","__WASTEWATER__","__NEEDHAM__"];
+  var N=5,INTERVAL=4200,cur=0,timer,raf,t0;
+  var imgEl,titleEl,descEl,dotsEl,tagsEl,progEl,barEl;
+  function init(){
+    imgEl=document.getElementById('sc-img');
+    if(!imgEl)return;
+    titleEl=document.getElementById('sc-title');
+    descEl=document.getElementById('sc-desc');
+    dotsEl=document.getElementById('sc-dots');
+    tagsEl=document.getElementById('sc-tags');
+    progEl=document.getElementById('sc-prog');
+    barEl=document.getElementById('sc-bar');
+    for(var i=0;i<N;i++){(function(i){
+      var d=document.createElement('span');
+      d.style.cssText='width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;flex-shrink:0;transition:background .2s,transform .2s;';
+      d.onclick=function(e){e.stopPropagation();goTo(i);};
+      dotsEl.appendChild(d);
+    })(i);}
+    goTo(0);
+  }
+  function render(i){
+    imgEl.style.opacity='0';
+    setTimeout(function(){if(IMGS[i].length>10)imgEl.src='data:image/jpeg;base64,'+IMGS[i];imgEl.style.opacity='1';},150);
+    titleEl.textContent=TITLES[i];
+    descEl.textContent=DESCS[i];
+    if(barEl)barEl.textContent=TITLES[i]+' — Live';
+    if(tagsEl)tagsEl.innerHTML='<span class="demo-tag-pill">'+TAGS[i]+'</span>';
+    dotsEl.querySelectorAll('span').forEach(function(d,j){d.style.background=j===i?'rgba(255,255,255,.9)':'rgba(255,255,255,.3)';d.style.transform=j===i?'scale(1.4)':'scale(1)';});
+  }
+  function startProg(){cancelAnimationFrame(raf);t0=performance.now();function tick(now){var p=Math.min(100,(now-t0)/INTERVAL*100);if(progEl)progEl.style.width=p+'%';if(p<100)raf=requestAnimationFrame(tick);}raf=requestAnimationFrame(tick);}
+  function goTo(i){cur=(i+N)%N;render(cur);clearInterval(timer);startProg();timer=setInterval(function(){goTo(cur+1);},INTERVAL);}
+  window.scClick=function(){window.open(HREFS[cur],'_blank');};
+  var panel=document.getElementById('sc-panel');
+  if(panel){panel.addEventListener('mouseenter',function(){clearInterval(timer);cancelAnimationFrame(raf);});panel.addEventListener('mouseleave',function(){timer=setInterval(function(){goTo(cur+1);},INTERVAL);startProg();});}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+})();
+</script>
+
+
 </body>
 </html>
