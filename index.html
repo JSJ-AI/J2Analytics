@@ -266,12 +266,12 @@ footer{border-top:1px solid var(--border);padding:32px 48px;display:flex;align-i
       <div class="cta-card-title">Request Discovery Call</div>
       <form id="contact-form" action="https://formspree.io/f/meepeorn" method="POST" onsubmit="handleSubmit(event)">
         <div class="form-grid">
-          <div class="fg"><label>Name</label><input type="text" placeholder="Jeff Smith" required></div>
-          <div class="fg"><label>Organization</label><input type="text" placeholder="City of Springfield"></div>
-          <div class="fg"><label>Email</label><input type="email" placeholder="you@organization.com" required></div>
+          <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Jeff Smith" required></div>
+          <div class="fg"><label>Organization</label><input type="text" name="organization" placeholder="City of Springfield"></div>
+          <div class="fg"><label>Email</label><input type="email" name="email" placeholder="you@organization.com" required></div>
           <div class="fg">
             <label>Area of interest</label>
-            <select>
+            <select name="interest">
               <option value="">Select one...</option>
               <option>Workflow automation</option>
               <option>Computer vision / safety</option>
@@ -280,11 +280,11 @@ footer{border-top:1px solid var(--border);padding:32px 48px;display:flex;align-i
               <option>Not sure yet — exploring</option>
             </select>
           </div>
-          <textarea placeholder="Briefly describe what you're working on or what's prompting your interest in AI..."></textarea>
+          <textarea name="message" placeholder="Briefly describe what you're working on or what's prompting your interest in AI..."></textarea>
         </div>
         <button type="submit" class="form-submit">Request Discovery Call →</button>
       </form>
-      <div class="form-success" id="form-success">
+      <div class="form-success" id="form-success" style="display:none;background:rgba(0,237,200,.08);border:1px solid rgba(0,237,200,.25);border-radius:10px;padding:32px 24px;">
         Thanks — Jeff will reach out within one business day to find a time.<br>
         <span style="color:var(--muted);font-size:13px;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ed87888b8bad87df8c838c819499848e9ec38c84">[email&#160;protected]</a> · Berlin, MA</span>
       </div>
